@@ -1,4 +1,4 @@
-package com.ubo.ecommerceapi.dto.request.cart;
+package com.ubo.ecommerceapi.dto.request;
 
 import java.util.UUID;
 

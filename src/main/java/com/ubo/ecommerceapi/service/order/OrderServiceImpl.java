@@ -3,6 +3,7 @@ package com.ubo.ecommerceapi.service.order;
 import com.ubo.ecommerceapi.dto.OrderDto;
 import com.ubo.ecommerceapi.dto.converter.OrderDtoConverter;
 import com.ubo.ecommerceapi.dto.request.PlaceOrderRequest;
+import com.ubo.ecommerceapi.model.Cart;
 import com.ubo.ecommerceapi.model.Customer;
 import com.ubo.ecommerceapi.model.Order;
 import com.ubo.ecommerceapi.model.Product;
@@ -23,18 +24,13 @@ public class OrderServiceImpl implements OrderService{
     private final OrderDtoConverter orderDtoConverter;
     private final CustomerRepository customerRepository;
 
-    public OrderDto placeOrder(UUID customerId, PlaceOrderRequest request) {
+    public OrderDto placeOrder(PlaceOrderRequest request) {
 
-        Customer customer = customerRepository.findById(customerId)
+        Customer customer = customerRepository.findById(request.customerId())
                 .orElseThrow(() -> new RuntimeException("Customer not found"));
 
-        List<Product> products = request.products().stream().map(
-                    productDto -> Product.builder()
-                            .id(productDto.id())
-                            .name(productDto.name())
-                            .price(productDto.price())
-                            .build()
-        ).collect(Collectors.toList());
+        Cart cart = customer.getCart();
+        List<Product> products = cart.getProduct();
 
 
         return orderDtoConverter.convertToDto(

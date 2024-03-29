@@ -16,19 +16,19 @@ public class CartController {
 
     private final CartService cartService;
 
-    @GetMapping("/getCart/{cartId}")
-    public ResponseEntity<CartDto> getCart(@PathVariable String cartId) {
-        return ResponseEntity.ok(cartService.getCart(UUID.fromString(cartId)));
+    @GetMapping("/getCart/{customerId}")
+    public ResponseEntity<CartDto> getCart(@PathVariable String customerId) {
+        return ResponseEntity.ok(cartService.getCart(UUID.fromString(customerId)));
     }
 
-    @PutMapping("/updateCart/{cartId}")
-    public ResponseEntity<CartDto> updateCart(@PathVariable String cartId, @RequestBody UpdateCartRequest request) {
-        return ResponseEntity.ok(cartService.updateCart(UUID.fromString(cartId), request));
+    @PutMapping("/updateCart/{customerId}")
+    public ResponseEntity<CartDto> updateCart(@PathVariable String customerId, @RequestBody UpdateCartRequest request) {
+        return ResponseEntity.ok(cartService.updateCart(UUID.fromString(customerId), request));
     }
 
-    @PutMapping("/emptyCart/{cartId}")
-    public ResponseEntity<String> emptyCart(@PathVariable String cartId) {
-        cartService.emptyCart(UUID.fromString(cartId));
+    @PutMapping("/emptyCart/{customerId}")
+    public ResponseEntity<String> emptyCart(@PathVariable String customerId) {
+        cartService.emptyCart(UUID.fromString(customerId));
         return ResponseEntity.ok("Cart successfully emptied");
     }
 

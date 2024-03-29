@@ -39,13 +39,13 @@ public class ProductController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/addProductToCart/{cartId}/{productId}")
-    public ResponseEntity<List<ProductDto>> addProductToCart(@PathVariable String cartId, @PathVariable String productId) {
-        return ResponseEntity.ok(productService.addProductToCart(UUID.fromString(cartId), UUID.fromString(productId)));
+    @PostMapping("/addProductToCart/{customerId}/{productId}")
+    public ResponseEntity<List<ProductDto>> addProductToCart(@PathVariable String customerId, @PathVariable String productId) {
+        return ResponseEntity.ok(productService.addProductToCart(UUID.fromString(customerId), UUID.fromString(productId)));
     }
 
-    @DeleteMapping("/removeProductFromCart/{cartId}/{productId}")
-    public ResponseEntity<List<ProductDto>> removeProductFromCart(@PathVariable String cartId, @PathVariable String productId) {
-        return ResponseEntity.ok(productService.removeProductFromCart(UUID.fromString(cartId), UUID.fromString(productId)));
+    @DeleteMapping("/removeProductFromCart/{customerId}/{productId}")
+    public ResponseEntity<List<ProductDto>> removeProductFromCart(@PathVariable String customerId, @PathVariable String productId) {
+        return ResponseEntity.ok(productService.removeProductFromCart(UUID.fromString(customerId), UUID.fromString(productId)));
     }
 }

@@ -9,9 +9,9 @@ import java.util.UUID;
 @Service
 public interface CartService {
 
-    CartDto getCart(UUID cartId);
+    CartDto getCart(UUID customerId);
 
-    CartDto updateCart(UUID cartId, UpdateCartRequest request);
+    CartDto updateCart(UUID customerId, UpdateCartRequest request);
 
-    void emptyCart(UUID cartId);
+    void emptyCart(UUID customerId);
 }

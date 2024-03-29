@@ -19,7 +19,7 @@ public interface ProductService {
 
     void deleteProduct(UUID productId);
 
-    List<ProductDto> addProductToCart(UUID cartId, UUID productId);
+    List<ProductDto> addProductToCart(UUID customerId, UUID productId);
 
-    List<ProductDto> removeProductFromCart(UUID cartId, UUID productId);
+    List<ProductDto> removeProductFromCart(UUID customerId, UUID productId);
 }

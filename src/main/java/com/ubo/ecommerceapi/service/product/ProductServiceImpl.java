@@ -5,8 +5,10 @@ import com.ubo.ecommerceapi.dto.converter.ProductDtoConverter;
 import com.ubo.ecommerceapi.dto.request.CreateProductRequest;
 import com.ubo.ecommerceapi.dto.request.UpdateProductRequest;
 import com.ubo.ecommerceapi.model.Cart;
+import com.ubo.ecommerceapi.model.Customer;
 import com.ubo.ecommerceapi.model.Product;
 import com.ubo.ecommerceapi.repository.CartRepository;
+import com.ubo.ecommerceapi.repository.CustomerRepository;
 import com.ubo.ecommerceapi.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,7 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final ProductDtoConverter productDtoConverter;
     private final CartRepository cartRepository;
+    private final CustomerRepository customerRepository;
 
     public ProductDto getProduct(UUID productId) {
         return productDtoConverter.convertToDto(
@@ -64,8 +67,10 @@ public class ProductServiceImpl implements ProductService {
         productRepository.deleteById(productId);
     }
 
-    public List<ProductDto> addProductToCart(UUID cartId, UUID productId) {
-        Cart cart = cartRepository.findById(cartId).orElseThrow(() -> new RuntimeException("Cart not found"));
+    public List<ProductDto> addProductToCart(UUID customerId, UUID productId) {
+        Customer customer = customerRepository.findById(customerId).orElseThrow(() -> new RuntimeException("Customer not found"));
+
+        Cart cart = customer.getCart();
         List<Product> products = cart.getProduct();
 
         products.add(productRepository.findById(productId).orElseThrow(() -> new RuntimeException("Product not found")));
@@ -75,8 +80,10 @@ public class ProductServiceImpl implements ProductService {
         return productDtoConverter.convertListToDto(products);
     }
 
-    public List<ProductDto> removeProductFromCart(UUID cartId, UUID productId) {
-        Cart cart = cartRepository.findById(cartId).orElseThrow(() -> new RuntimeException("Cart not found"));
+    public List<ProductDto> removeProductFromCart(UUID customerId, UUID productId) {
+        Customer customer = customerRepository.findById(customerId).orElseThrow(() -> new RuntimeException("Customer not found"));
+
+        Cart cart = customer.getCart();
         List<Product> products = cart.getProduct();
 
         products.remove(productRepository.findById(productId).orElseThrow(() -> new RuntimeException("Product not found")));

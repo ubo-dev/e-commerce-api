@@ -18,7 +18,8 @@ import java.util.UUID;
 @SuperBuilder
 public class Cart extends BaseEntity {
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Customer customer;
 
     @ManyToMany

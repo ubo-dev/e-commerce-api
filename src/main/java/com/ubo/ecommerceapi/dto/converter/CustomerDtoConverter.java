@@ -6,11 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
-@RequiredArgsConstructor
 public class CustomerDtoConverter {
-
-    private final OrderDtoConverter orderDtoConverter;
-
     public CustomerDto convertToDto(Customer customer) {
         return new CustomerDto(
                 customer.getId(),
@@ -18,7 +14,6 @@ public class CustomerDtoConverter {
                 customer.getEmail(),
                 customer.getAddress(),
                 customer.getPhone(),
-                orderDtoConverter.convertListToDto(customer.getOrder()),
                 customer.getCreatedAt(),
                 customer.getUpdatedAt()
         );

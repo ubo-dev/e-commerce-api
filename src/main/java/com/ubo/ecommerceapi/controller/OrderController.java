@@ -17,9 +17,9 @@ public class OrderController {
 
     private final OrderService orderService;
 
-    @PostMapping("/placeOrder/{customerId}")
-    public ResponseEntity<OrderDto> placeOrder(@PathVariable String customerId, PlaceOrderRequest request) {
-        return ResponseEntity.ok(orderService.placeOrder(UUID.fromString(customerId), request));
+    @PostMapping("/placeOrder")
+    public ResponseEntity<OrderDto> placeOrder(@RequestBody PlaceOrderRequest request) {
+        return ResponseEntity.ok(orderService.placeOrder(request));
     }
 
     @GetMapping("/getOrder/{orderCode}")

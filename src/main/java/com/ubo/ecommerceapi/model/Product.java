@@ -20,6 +20,7 @@ public class Product extends BaseEntity{
     private double price;
     private int quantity;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "order_id", referencedColumnName = "id")
     private Order order;
 }

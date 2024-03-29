@@ -23,6 +23,10 @@ public class Cart extends BaseEntity {
     private Customer customer;
 
     @ManyToMany
+    @JoinTable(
+            name = "cart_product",
+            joinColumns = @JoinColumn(name = "cart_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id"))
     private List<Product> product;
 
     private double total;

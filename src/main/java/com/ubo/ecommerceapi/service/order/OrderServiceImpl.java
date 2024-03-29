@@ -12,6 +12,7 @@ import com.ubo.ecommerceapi.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -24,21 +25,18 @@ public class OrderServiceImpl implements OrderService{
     private final OrderDtoConverter orderDtoConverter;
     private final CustomerRepository customerRepository;
 
-    public OrderDto placeOrder(PlaceOrderRequest request) {
+    public OrderDto placeOrder(UUID customerId, String orderCode) {
 
-        Customer customer = customerRepository.findById(request.customerId())
+        Customer customer = customerRepository.findById(customerId)
                 .orElseThrow(() -> new RuntimeException("Customer not found"));
-
-        Cart cart = customer.getCart();
-        List<Product> products = cart.getProduct();
-
 
         return orderDtoConverter.convertToDto(
                 orderRepository.save(
                         Order.builder()
-                                .orderCode(request.orderCode())
+                                .orderCode(orderCode)
                                 .customer(customer)
-                                .products(products)
+                                .createdAt(LocalDateTime.now())
+                                .updatedAt(LocalDateTime.now())
                                 .build()
                 )
         );

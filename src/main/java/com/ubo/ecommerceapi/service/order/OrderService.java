@@ -10,7 +10,7 @@ import java.util.UUID;
 @Service
 public interface OrderService {
 
-    OrderDto placeOrder(PlaceOrderRequest request);
+    OrderDto placeOrder(UUID customerId, String orderCode);
 
     OrderDto getOrderForCode(String orderCode);
 

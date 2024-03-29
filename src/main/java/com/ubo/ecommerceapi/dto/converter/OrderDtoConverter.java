@@ -11,11 +11,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OrderDtoConverter {
 
-    private final ProductDtoConverter productDtoConverter;
+    private final CustomerDtoConverter customerDtoConverter;
     public OrderDto convertToDto(Order order) {
         return new OrderDto(
                 order.getId(),
-                productDtoConverter.convertListToDto(order.getProducts()),
+                customerDtoConverter.convertToDto(order.getCustomer()),
                 order.getCreatedAt(),
                 order.getUpdatedAt()
         );

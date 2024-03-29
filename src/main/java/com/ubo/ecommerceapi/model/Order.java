@@ -21,10 +21,8 @@ public class Order extends BaseEntity{
 
     private String orderCode;
 
-    @OneToMany
-    private List<Product> products;
-
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Customer customer;
 
 }

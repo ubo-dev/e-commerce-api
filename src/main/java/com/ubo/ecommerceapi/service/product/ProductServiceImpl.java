@@ -73,9 +73,22 @@ public class ProductServiceImpl implements ProductService {
         Cart cart = customer.getCart();
         List<Product> products = cart.getProduct();
 
-        products.add(productRepository.findById(productId).orElseThrow(() -> new RuntimeException("Product not found")));
+        Product productToBeAdded = productRepository.findById(productId).orElseThrow(() -> new RuntimeException("Product not found"));
+
+        var total = products.stream().mapToDouble(Product::getPrice).sum();
+
+        products.add(productToBeAdded);
         cart.setProduct(products);
+
+        cart.setTotal(total + productToBeAdded.getPrice());
+        productToBeAdded.setQuantity(productToBeAdded.getQuantity() - 1);
+
+        if (productToBeAdded.getQuantity() < 0) {
+            throw new RuntimeException("Product out of stock");
+        }
+
         cartRepository.save(cart);
+        productRepository.save(productToBeAdded);
 
         return productDtoConverter.convertListToDto(products);
     }
@@ -86,9 +99,17 @@ public class ProductServiceImpl implements ProductService {
         Cart cart = customer.getCart();
         List<Product> products = cart.getProduct();
 
-        products.remove(productRepository.findById(productId).orElseThrow(() -> new RuntimeException("Product not found")));
+        Product productToBeDeleted = productRepository.findById(productId).orElseThrow(() -> new RuntimeException("Product not found"));
+
+        products.remove(productToBeDeleted);
         cart.setProduct(products);
+
+        var total = products.stream().mapToDouble(Product::getPrice).sum();
+        cart.setTotal(total - productToBeDeleted.getPrice());
+        productToBeDeleted.setQuantity(productToBeDeleted.getQuantity() + 1);
+
         cartRepository.save(cart);
+        productRepository.save(productToBeDeleted);
 
         return productDtoConverter.convertListToDto(products);
     }

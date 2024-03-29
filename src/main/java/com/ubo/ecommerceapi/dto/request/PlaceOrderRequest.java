@@ -6,5 +6,5 @@ import com.ubo.ecommerceapi.dto.ProductDto;
 
 import java.util.List;
 
-public record PlaceOrderRequest(CustomerDto customer, List<ProductDto> products) {
+public record PlaceOrderRequest(String orderCode, List<ProductDto> products) {
 }

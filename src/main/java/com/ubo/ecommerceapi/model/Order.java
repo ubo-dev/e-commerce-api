@@ -16,6 +16,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
+@Table(name = "orders")
 public class Order extends BaseEntity{
 
     private String orderCode;

@@ -2,12 +2,14 @@ package com.ubo.ecommerceapi.dto.converter;
 
 import com.ubo.ecommerceapi.dto.CustomerDto;
 import com.ubo.ecommerceapi.model.Customer;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class CustomerDtoConverter {
 
-
+    private final OrderDtoConverter orderDtoConverter;
 
     public CustomerDto convertToDto(Customer customer) {
         return new CustomerDto(
@@ -16,7 +18,7 @@ public class CustomerDtoConverter {
                 customer.getEmail(),
                 customer.getAddress(),
                 customer.getPhone(),
-                customer.getOrder(),
+                orderDtoConverter.convertListToDto(customer.getOrder()),
                 customer.getCreatedAt(),
                 customer.getUpdatedAt()
         );
